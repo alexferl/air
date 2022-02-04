@@ -142,9 +142,6 @@ func (a *Asset) Resize(rp *ResizeParams) ([]byte, error) {
 		return nil, err
 	}
 
-	if rp.Quality > 0 {
-	}
-
 	var b []byte
 	var exportErr error
 	switch rp.ImageType {
