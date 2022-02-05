@@ -62,7 +62,8 @@ func (h *Handler) Stats(c echo.Context) error {
 			Runtime: VipsRuntime{
 				OperationCounts: rs.OperationCounts,
 			},
-		}}
+		},
+	}
 
 	return c.JSON(http.StatusOK, s)
 }

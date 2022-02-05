@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -13,6 +14,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 
 	"github.com/alexferl/air/asset"
 	"github.com/alexferl/air/util"
@@ -46,7 +48,10 @@ func (h *Handler) Asset(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, ErrorResponse{"Invalid id"})
 	}
 
-	f, err := h.Storage.Get(path)
+	ctx, cancel := context.WithTimeout(context.Background(), viper.GetDuration("file-upload-timeout"))
+	defer cancel()
+
+	f, err := h.Storage.Get(ctx, path)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, ErrorResponse{"File not found"})
 	}

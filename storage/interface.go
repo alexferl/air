@@ -1,12 +1,13 @@
 package storage
 
 import (
+	"context"
 	"io"
 
 	"github.com/alexferl/air/asset"
 )
 
 type Storage interface {
-	Get(string) (io.ReadCloser, error)
-	Put(a *asset.Asset) error
+	Get(ctx context.Context, path string) (io.ReadCloser, error)
+	Put(ctx context.Context, a *asset.Asset) error
 }

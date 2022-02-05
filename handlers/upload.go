@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"bufio"
+	"context"
 	"io"
 	"net/http"
 
@@ -14,7 +15,7 @@ import (
 )
 
 func (h *Handler) Upload(c echo.Context) error {
-	var maxFileSize = viper.GetInt64("max-file-size") << 20
+	maxFileSize := viper.GetInt64("max-file-size") << 20
 
 	c.Request().Body = http.MaxBytesReader(c.Response(), c.Request().Body, maxFileSize+1024)
 	reader, err := c.Request().MultipartReader()
@@ -65,7 +66,10 @@ func (h *Handler) Upload(c echo.Context) error {
 	}
 	defer util.CleanupTempFile(a.File)
 
-	err = h.Storage.Put(a)
+	ctx, cancel := context.WithTimeout(context.Background(), viper.GetDuration("file-upload-timeout"))
+	defer cancel()
+
+	err = h.Storage.Put(ctx, a)
 	if err != nil {
 		log.Error().Msgf("Failed to save file: %v", err)
 		return c.JSON(http.StatusInternalServerError, ErrorResponse{"Error saving file to storage"})

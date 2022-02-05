@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"context"
 	"io"
 	"os"
 
@@ -9,19 +10,23 @@ import (
 	"github.com/alexferl/air/asset"
 )
 
-type Filesystem struct {
+type FilesystemOpts struct {
 	Path string
 }
 
-func NewFilesystem(path string) Storage {
-	return &Filesystem{
-		Path: path,
-	}
+type Filesystem struct {
+	*FilesystemOpts
 }
 
-func (fs *Filesystem) Get(name string) (io.ReadCloser, error) {
-	fullPath := fs.getFullPath(name)
-	f, err := os.OpenFile(fullPath, os.O_RDONLY, 0644)
+func NewFilesystem(opts *FilesystemOpts) (Storage, error) {
+	return &Filesystem{
+		FilesystemOpts: opts,
+	}, nil
+}
+
+func (fs *Filesystem) Get(_ context.Context, path string) (io.ReadCloser, error) {
+	fullPath := fs.getFullPath(path)
+	f, err := os.OpenFile(fullPath, os.O_RDONLY, 0o644)
 	if err != nil {
 		log.Error().Msgf("Failed to open file for reading: %v", err)
 		return nil, err
@@ -30,7 +35,7 @@ func (fs *Filesystem) Get(name string) (io.ReadCloser, error) {
 	return f, nil
 }
 
-func (fs *Filesystem) Put(a *asset.Asset) error {
+func (fs *Filesystem) Put(_ context.Context, a *asset.Asset) error {
 	folderPath := fs.getFullPath(a.PathPrefix)
 	err := os.MkdirAll(folderPath, os.ModePerm)
 	if err != nil {
@@ -40,7 +45,7 @@ func (fs *Filesystem) Put(a *asset.Asset) error {
 
 	fullPath := fs.getFullPath(a.Path)
 	if _, err := os.Stat(fullPath); os.IsNotExist(err) {
-		f, err := os.OpenFile(fullPath, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0644)
+		f, err := os.OpenFile(fullPath, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o644)
 		if err != nil {
 			log.Error().Msgf("Failed to open file for writing: %v", err)
 			return err
@@ -58,7 +63,7 @@ func (fs *Filesystem) Put(a *asset.Asset) error {
 }
 
 func (fs *Filesystem) getFullPath(name string) string {
-	var fullPath = fs.Path
+	fullPath := fs.Path
 	if len(fullPath) > 0 && string(fullPath[len(fullPath)-1]) != "/" {
 		fullPath += "/"
 	}

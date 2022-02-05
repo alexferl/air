@@ -226,7 +226,6 @@ func (a *Asset) setExtensionsFromMimeType(typ string) {
 			a.Ext = exts[0]
 		}
 	}
-
 }
 
 func (a *Asset) setMimeTypeFromExt(ext string) {
