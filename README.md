@@ -59,6 +59,8 @@ The quality must be from `1`-`100`.
 
 ## Development
 
+Install libvips by following the instructions [here](https://github.com/davidbyttow/govips#dependencies).
+
 ### Installing dependencies
 ```shell
 $ make dev
