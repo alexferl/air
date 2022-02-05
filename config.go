@@ -118,7 +118,7 @@ func (c *Config) addFlags(fs *pflag.FlagSet) {
 
 	// Storage
 	fs.StringVar(&c.Storage.Type, "storage-type", c.Storage.Type,
-		"Storage type to use for assets (filesystem, gcloud)")
+		"Storage type to use for assets (filesystem, gcloud, linode, s3)")
 
 	// Filesystem
 	fs.StringVar(&c.Storage.Filesystem.Path, "filesystem-path", c.Storage.Filesystem.Path,
@@ -134,16 +134,16 @@ func (c *Config) addFlags(fs *pflag.FlagSet) {
 	fs.StringVar(&c.Storage.GCloud.Location, "gcloud-location", c.Storage.GCloud.Location,
 		"Google Cloud bucket location")
 
+	// Linode
+	fs.StringVar(&c.Storage.Linode.Bucket, "linode-bucket", c.Storage.Linode.Bucket,
+		"Linode storage bucket")
+	fs.StringVar(&c.Storage.Linode.Region, "linode-region", c.Storage.Linode.Region, "Linode region")
+
 	// S3
 	fs.StringVar(&c.Storage.S3.Bucket, "s3-bucket", c.Storage.S3.Bucket, "AWS S3 storage bucket")
 	fs.StringVar(&c.Storage.S3.Region, "s3-region", c.Storage.S3.Region, "AWS S3 region")
 	fs.StringVar(&c.Storage.S3.StorageClass, "s3-storage-class", c.Storage.S3.StorageClass,
 		"AWS S3 storage class")
-
-	// Linode
-	fs.StringVar(&c.Storage.Linode.Bucket, "linode-bucket", c.Storage.Linode.Bucket,
-		"Linode storage bucket")
-	fs.StringVar(&c.Storage.Linode.Region, "linode-region", c.Storage.Linode.Region, "Linode region")
 }
 
 func (c *Config) BindFlags() {

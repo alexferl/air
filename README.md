@@ -42,7 +42,7 @@ Retrieve an image asset in a different size:
 ```shell
 $ http http://127.0.0.1:1323/b056dab52b1ad845a72da28ab28bcc39948011ec68122ff791da252afdfcd67e?size=640x480
 ```
-Valid size formats (max size: `5000`x`5000`):
+Valid size parameters (max size: `5000`x`5000`):
 ```
 size=640x480 # force size, that is, break aspect ratio
 size=640  # will scale the height accordingly
@@ -55,7 +55,7 @@ Retrieve an image asset in a different quality:
 ```shell
 $ http http://127.0.0.1:1323/b056dab52b1ad845a72da28ab28bcc39948011ec68122ff791da252afdfcd67e?quality=50
 ```
-The quality must be from `1`-`100`.
+The quality must be between `1` and `100`.
 
 ## Development
 
