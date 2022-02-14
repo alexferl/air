@@ -2,6 +2,9 @@ ARG GOLANG_VERSION=1.17.7
 FROM golang:${GOLANG_VERSION} AS builder
 MAINTAINER Alexandre Ferland <me@alexferl.com>
 
+RUN groupadd -g 1337 appuser && \
+    useradd -r -d /app -u 1337 -g appuser appuser
+
 WORKDIR /build
 
 RUN apt-get update && apt-get install -y \
@@ -14,12 +17,7 @@ RUN go mod download -x
 COPY . .
 
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build
-
-FROM golang:${GOLANG_VERSION}
-RUN groupadd -g 1337 appuser && \
-    useradd -r -d /app -u 1337 -g appuser appuser
-COPY --from=builder /build/configs /configs
-COPY --from=builder /build/air /air
+RUN mv /build/air /air
 
 USER appuser
 
