@@ -1,2 +1,4 @@
 app-name = "air"
-bind-address = "0.0.0.0"
+env-name = "PROD"
+env-var-prefix = "air"
+http-bind-address = "0.0.0.0"

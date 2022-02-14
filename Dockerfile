@@ -1,22 +1,28 @@
-FROM golang:1.17.6
+ARG GOLANG_VERSION=1.17.7
+FROM golang:${GOLANG_VERSION} AS builder
 MAINTAINER Alexandre Ferland <me@alexferl.com>
 
 WORKDIR /build
 
-RUN apt-get update \
-            && apt-get install -y \
-            libvips-dev
+RUN apt-get update && apt-get install -y \
+    libvips-dev
 
 COPY go.mod .
 COPY go.sum .
-RUN go mod download
+RUN go mod download -x
 
 COPY . .
 
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build
-RUN mv air /air
 
-ENTRYPOINT ["/air"]
+FROM golang:${PYTHON_VERSION}
+RUN groupadd -g 1337 appuser && \
+    useradd -r -d /app -u 1337 -g appuser appuser
+COPY --from-builder /build/configs /configs
+COPY --from=builder /build/air /air
+
+USER appuser
 
 EXPOSE 1323
-CMD []
+
+ENTRYPOINT ["/air"]
