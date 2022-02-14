@@ -15,7 +15,7 @@ COPY . .
 
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build
 
-FROM golang:${PYTHON_VERSION}
+FROM golang:${GOLANG_VERSION}
 RUN groupadd -g 1337 appuser && \
     useradd -r -d /app -u 1337 -g appuser appuser
 COPY --from=builder /build/configs /configs
