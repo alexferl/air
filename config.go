@@ -63,7 +63,7 @@ type S3 struct {
 // NewConfig creates a Config instance
 func NewConfig() *Config {
 	return &Config{
-		Config:              xconfig.New(),
+		Config:              xconfig.New("air"),
 		Http:                xhttp.DefaultConfig,
 		Logging:             xlog.DefaultConfig,
 		MaxFileSize:         10,

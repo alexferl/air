@@ -1,3 +1,2 @@
 app-name = "air"
-env-name = "LOCAL"
-env-var-prefix = "air"
+env-name = "local"

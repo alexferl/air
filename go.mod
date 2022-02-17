@@ -4,9 +4,9 @@ go 1.17
 
 require (
 	cloud.google.com/go/storage v1.20.0
-	github.com/alexferl/golib/config v0.0.0-20220209021910-e476bf963a39
-	github.com/alexferl/golib/http v0.0.0-20220209021910-e476bf963a39
-	github.com/alexferl/golib/log v0.0.0-20220209021910-e476bf963a39
+	github.com/alexferl/golib/config v0.0.0-20220214025012-704642398edc
+	github.com/alexferl/golib/http v0.0.0-20220214025012-704642398edc
+	github.com/alexferl/golib/log v0.0.0-20220214022442-1ca69d710708
 	github.com/aws/aws-sdk-go-v2 v1.13.0
 	github.com/aws/aws-sdk-go-v2/config v1.13.1
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.24.1

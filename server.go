@@ -32,7 +32,7 @@ func main() {
 	r := &router.Router{
 		Routes: []router.Route{
 			{"Root", http.MethodGet, "/", h.Root},
-			{"Asset", http.MethodGet, "/:id", h.Asset},
+			{"Asset", http.MethodGet, "/assets/:id", h.Asset},
 			{"Stats", http.MethodGet, "/stats", h.Stats},
 			{"Upload", http.MethodPost, "/upload", h.Upload},
 			{"FavIcon", http.MethodGet, "/favicon.ico", func(c echo.Context) error {
