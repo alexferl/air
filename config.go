@@ -15,9 +15,10 @@ type Config struct {
 	Config              *xconfig.Config
 	Http                *xhttp.Config
 	Logging             *xlog.Config
-	MaxFileSize         int64
 	FileDownloadTimeout time.Duration
 	FileUploadTimeout   time.Duration
+	MaxFileSize         int64
+	TmpPath             string
 	Vips                *Vips
 	Storage             *Storage
 }
@@ -66,9 +67,10 @@ func NewConfig() *Config {
 		Config:              xconfig.New("air"),
 		Http:                xhttp.DefaultConfig,
 		Logging:             xlog.DefaultConfig,
-		MaxFileSize:         10,
 		FileUploadTimeout:   time.Second * 60,
 		FileDownloadTimeout: time.Second * 60,
+		MaxFileSize:         10,
+		TmpPath:             "",
 		Vips: &Vips{
 			ConcurrencyLevel: 1,
 			MaxCacheMem:      100 * 1024 * 1024, // 100MB
@@ -105,6 +107,8 @@ func (c *Config) addFlags(fs *pflag.FlagSet) {
 		"File download timeout")
 	fs.DurationVar(&c.FileUploadTimeout, "file-upload-timeout", c.FileUploadTimeout, "File upload timeout")
 	fs.Int64Var(&c.MaxFileSize, "max-file-size", c.MaxFileSize, "Max file size for uploads in megabytes")
+	fs.StringVar(&c.TmpPath, "temp-path", c.TmpPath,
+		"Temporary files path")
 
 	// Vips
 	fs.IntVar(&c.Vips.ConcurrencyLevel, "vips-concurrency-level", c.Vips.ConcurrencyLevel,

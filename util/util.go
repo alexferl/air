@@ -8,10 +8,11 @@ import (
 
 	"github.com/minio/sha256-simd"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 func CreateTempFile() (*os.File, error) {
-	f, err := ioutil.TempFile("", "air-")
+	f, err := ioutil.TempFile(viper.GetString("temp-path"), "air-")
 	if err != nil {
 		log.Error().Msgf("Failed to create temp file: %v", err)
 		return nil, err

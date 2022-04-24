@@ -1,4 +1,4 @@
-ARG GOLANG_VERSION=1.17.7
+ARG GOLANG_VERSION=1.17.9
 FROM golang:${GOLANG_VERSION} AS builder
 MAINTAINER Alexandre Ferland <me@alexferl.com>
 

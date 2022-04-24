@@ -75,6 +75,6 @@ func (h *Handler) Upload(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, ErrorResponse{"Error saving file to storage"})
 	}
 
-	c.Response().Header().Set("Location", "/"+a.Name)
+	c.Response().Header().Set("Location", "/assets/"+a.Name)
 	return c.JSON(http.StatusCreated, map[string]string{"id": a.Name})
 }
