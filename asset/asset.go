@@ -3,7 +3,6 @@ package asset
 import (
 	"bufio"
 	"bytes"
-	"crypto/sha256"
 	"errors"
 	"fmt"
 	"io"
@@ -13,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/davidbyttow/govips/v2/vips"
+	"github.com/minio/sha256-simd"
 	"github.com/rs/zerolog/log"
 
 	"github.com/alexferl/air/util"

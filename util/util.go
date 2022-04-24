@@ -1,12 +1,12 @@
 package util
 
 import (
-	"crypto/sha256"
 	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
 
+	"github.com/minio/sha256-simd"
 	"github.com/rs/zerolog/log"
 )
 
